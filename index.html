@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier IA — Les 5 fiches pratiques</title>
+<style>
+  :root{
+    --bg: #f4f5f7;
+    --bg-grad-1: #eef2ff;
+    --bg-grad-2: #f4f5f7;
+    --surface: #ffffff;
+    --surface-soft: #fafafa;
+    --border: #e5e7eb;
+    --text: #14161a;
+    --text-soft: #55596b;
+    --text-faint: #8b8f9f;
+    --shadow: 0 1px 2px rgba(16,17,20,.04), 0 8px 24px rgba(16,17,20,.06);
+    --shadow-hover: 0 4px 10px rgba(16,17,20,.06), 0 20px 40px rgba(16,17,20,.10);
+    --accent: #6d5bf6;
+    --accent-soft: #ede9ff;
+    --ring: rgba(109,91,246,.35);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #0c0d10;
+      --bg-grad-1: #14131f;
+      --bg-grad-2: #0c0d10;
+      --surface: #16171c;
+      --surface-soft: #1b1c22;
+      --border: #2a2b33;
+      --text: #f2f3f6;
+      --text-soft: #b3b6c4;
+      --text-faint: #74778a;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+      --shadow-hover: 0 4px 10px rgba(0,0,0,.35), 0 24px 48px rgba(0,0,0,.45);
+      --accent: #9b8cff;
+      --accent-soft: rgba(155,140,255,.14);
+      --ring: rgba(155,140,255,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #0c0d10;
+    --bg-grad-1: #14131f;
+    --bg-grad-2: #0c0d10;
+    --surface: #16171c;
+    --surface-soft: #1b1c22;
+    --border: #2a2b33;
+    --text: #f2f3f6;
+    --text-soft: #b3b6c4;
+    --text-faint: #74778a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    --shadow-hover: 0 4px 10px rgba(0,0,0,.35), 0 24px 48px rgba(0,0,0,.45);
+    --accent: #9b8cff;
+    --accent-soft: rgba(155,140,255,.14);
+    --ring: rgba(155,140,255,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, var(--bg-grad-1), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, var(--bg-grad-1), transparent 55%),
+      var(--bg-grad-2);
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-inline: 20px;
+    padding-block: calc(56px + env(safe-area-inset-top, 0px)) calc(64px + env(safe-area-inset-bottom, 0px));
+    min-height: 100vh;
+  }
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+
+  .wrap{ max-width: 1080px; margin: 0 auto; }
+
+  /* ---------- Hero ---------- */
+  .hero{ text-align:center; margin-bottom: 56px; }
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+  h1{
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    font-weight: 800;
+  }
+  h1 .grad{
+    background: linear-gradient(120deg, var(--accent), #ff7a59 60%, #ffb347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p{
+    color: var(--text-soft);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Progress rail ---------- */
+  .rail{
+    display:flex; align-items:center; justify-content:center;
+    gap: 6px; flex-wrap: wrap;
+    margin: 32px 0 0;
+    color: var(--text-faint);
+    font-size: .82rem;
+    font-weight: 600;
+  }
+  .rail a{ color: var(--text-soft); text-decoration:none; padding: 4px 10px; border-radius: 8px; transition: background .15s, color .15s; }
+  .rail a:hover{ background: var(--surface-soft); color: var(--text); }
+  .rail .sep{ color: var(--border); }
+
+  /* ---------- Cards grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    margin-top: 44px;
+  }
+  .card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 26px;
+    text-decoration:none;
+    color: inherit;
+    box-shadow: var(--shadow);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, var(--accent-card, var(--accent)) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity .25s ease;
+    z-index:-1;
+  }
+  .card:hover, .card:focus-visible{
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: color-mix(in srgb, var(--accent-card, var(--accent)) 40%, var(--border));
+  }
+  .card:hover::before, .card:focus-visible::before{ opacity:.07; }
+  .card:focus-visible{ outline: 2px solid var(--ring); outline-offset: 3px; }
+
+  .card-top{ display:flex; align-items:center; gap: 14px; margin-bottom: 18px; }
+  .card-num{
+    font-size:.72rem; font-weight:800; letter-spacing:.04em;
+    color: var(--accent-card, var(--accent));
+    background: color-mix(in srgb, var(--accent-card, var(--accent)) 14%, transparent);
+    width: 30px; height:30px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .card-emoji{ font-size: 1.7rem; line-height:1; }
+  .card h2{
+    font-size: 1.15rem;
+    margin: 0 0 8px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .card p{
+    color: var(--text-soft);
+    font-size: .92rem;
+    margin: 0 0 18px;
+    flex-grow: 1;
+  }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom: 18px; }
+  .tag{
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .card-cta{
+    display:flex; align-items:center; gap:6px;
+    font-size: .88rem; font-weight: 700;
+    color: var(--accent-card, var(--accent));
+    margin-top:auto;
+  }
+  .card-cta svg{ transition: transform .2s ease; }
+  .card:hover .card-cta svg{ transform: translateX(3px); }
+
+  .card.c1{ --accent-card: #ff6b6b; }
+  .card.c2{ --accent-card: #0284c7; }
+  .card.c3{ --accent-card: #ea580c; }
+  .card.c4{ --accent-card: #764ba2; }
+  .card.c5{ --accent-card: #10b981; }
+
+  /* ---------- Fil rouge ---------- */
+  .thread{
+    margin-top: 64px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px clamp(20px, 4vw, 40px);
+    box-shadow: var(--shadow);
+  }
+  .thread h3{
+    font-size: 1.05rem;
+    margin: 0 0 20px;
+    font-weight:700;
+    display:flex; align-items:center; gap:8px;
+  }
+  .steps{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap: 10px;
+  }
+  .step{
+    display:flex; align-items:center; gap:8px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 14px 8px 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    text-decoration:none;
+    color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .step:hover{ border-color: var(--accent); background: var(--accent-soft); }
+  .step .n{
+    width:22px; height:22px; border-radius:50%;
+    background: var(--accent);
+    color:#fff;
+    font-size:.72rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .arrow{ color: var(--text-faint); font-size:.9rem; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    margin-top: 56px;
+    text-align:center;
+    color: var(--text-faint);
+    font-size: .82rem;
+  }
+  footer a{ color: var(--text-soft); }
+
+  @media (max-width: 480px){
+    .card{ padding: 20px; }
+    .thread{ padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="kicker">🧠 Atelier 1 · Kit pédagogique</span>
+    <h1>Utiliser l'IA <span class="grad">sans se planter</span></h1>
+    <p>Cinq fiches pratiques, autonomes et imprimables — RGPD, méthode de briefing, outils 2026, erreurs à éviter et prompts prêts à l'emploi.</p>
+
+    <div class="rail">
+      <a href="#c1">01 Checklist</a><span class="sep">→</span>
+      <a href="#c2">02 R.C.T.F.E.</a><span class="sep">→</span>
+      <a href="#c3">03 Outils</a><span class="sep">→</span>
+      <a href="#c4">04 Erreurs</a><span class="sep">→</span>
+      <a href="#c5">05 Prompts</a>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <a class="card c1" id="c1" href="01-Checklist-IA-Saine.html">
+      <div class="card-top">
+        <span class="card-num">01</span>
+        <span class="card-emoji">🛡️</span>
+      </div>
+      <h2>Checklist IA Saine</h2>
+      <p>Les 3 commandements — Transparence, Consentement, Sécurité — et la liste des données strictement interdites dans une IA publique.</p>
+      <div class="tag-row"><span class="tag">RGPD</span><span class="tag">Checklist</span></div>
+      <span class="card-cta">Ouvrir la fiche
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="card c2" id="c2" href="02-Template-RCTFE.html">
+      <div class="card-top">
+        <span class="card-num">02</span>
+        <span class="card-emoji">📋</span>
+      </div>
+      <h2>Template R.C.T.F.E.</h2>
+      <p>La méthode complète pour briefer l'IA comme un pro : Rôle, Contexte, Tâche, Format, Exemples — avec générateur de prompt intégré et le Canarie 🐦.</p>
+      <div class="tag-row"><span class="tag">Interactif</span><span class="tag">Méthode</span></div>
+      <span class="card-cta">Ouvrir la fiche
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="card c3" id="c3" href="03-Liste-Outils-Liens-2026.html">
+      <div class="card-top">
+        <span class="card-num">03</span>
+        <span class="card-emoji">🛠️</span>
+      </div>
+      <h2>Panorama 2026 des outils IA</h2>
+      <p>ChatGPT, Claude, Gemini, Vibe (Mistral) : matrice de décision, confidentialité, hébergement et recommandations par cas d'usage.</p>
+      <div class="tag-row"><span class="tag">Comparatif</span><span class="tag">2026</span></div>
+      <span class="card-cta">Ouvrir la fiche
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="card c4" id="c4" href="04-Top10-Pires-Prompts.html">
+      <div class="card-top">
+        <span class="card-num">04</span>
+        <span class="card-emoji">🚫</span>
+      </div>
+      <h2>Top 10 des pires prompts</h2>
+      <p>Les erreurs les plus fréquentes, en format ❌ mauvais → ✓ bon → 📚 leçon, suivies des 10 règles d'or.</p>
+      <div class="tag-row"><span class="tag">Étude de cas</span><span class="tag">Avant/Après</span></div>
+      <span class="card-cta">Ouvrir la fiche
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a class="card c5" id="c5" href="05-Mes-3-Prompts-Perso.html">
+      <div class="card-top">
+        <span class="card-num">05</span>
+        <span class="card-emoji">🚀</span>
+      </div>
+      <h2>3 prompts prêts à l'emploi</h2>
+      <p>Reformulation pro, email de relance, analyse concurrence — copiables tels quels, avec adaptations rapides selon votre cas.</p>
+      <div class="tag-row"><span class="tag">Copier-coller</span><span class="tag">PME/Freelance</span></div>
+      <span class="card-cta">Ouvrir la fiche
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+  </div>
+
+  <div class="thread">
+    <h3>🧵 Fil rouge pédagogique</h3>
+    <div class="steps">
+      <a class="step" href="01-Checklist-IA-Saine.html"><span class="n">1</span>Le cadre (RGPD)</a>
+      <span class="arrow">→</span>
+      <a class="step" href="02-Template-RCTFE.html"><span class="n">2</span>La méthode</a>
+      <span class="arrow">→</span>
+      <a class="step" href="04-Top10-Pires-Prompts.html"><span class="n">3</span>Les pièges</a>
+      <span class="arrow">→</span>
+      <a class="step" href="05-Mes-3-Prompts-Perso.html"><span class="n">4</span>Les modèles</a>
+      <span class="arrow">→</span>
+      <a class="step" href="03-Liste-Outils-Liens-2026.html"><span class="n">5</span>Le bon outil</a>
+    </div>
+  </div>
+
+  <footer>
+    Support pédagogique — pas un conseil juridique · Vérifiez toujours auprès de votre DPO.
+  </footer>
+
+</div>
+</body>
+</html>

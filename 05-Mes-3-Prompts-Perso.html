@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Prompts Prêts à l'Emploi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .intro {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 15px;
+            margin-bottom: 40px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            color: #0c4a6e;
+        }
+        .prompt-card {
+            border: 2px solid;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .prompt-card.1 { border-color: #10b981; }
+        .prompt-card.2 { border-color: #f59e0b; }
+        .prompt-card.3 { border-color: #3b82f6; }
+
+        .card-header {
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .prompt-card.1 .card-header { background: linear-gradient(135deg, #10b981, #059669); }
+        .prompt-card.2 .card-header { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .prompt-card.3 .card-header { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+        .card-emoji {
+            font-size: 1.8em;
+        }
+        .card-content {
+            padding: 25px;
+        }
+        .section-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        .section-label:first-of-type {
+            margin-top: 0;
+        }
+        .prompt-box {
+            background: #f3f4f6;
+            border-left: 3px solid;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        .prompt-card.1 .prompt-box { border-left-color: #10b981; }
+        .prompt-card.2 .prompt-box { border-left-color: #f59e0b; }
+        .prompt-card.3 .prompt-box { border-left-color: #3b82f6; }
+
+        .description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .tips {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+        .tips strong {
+            color: #b45309;
+        }
+        .usage-context {
+            background: #f0f9ff;
+            border-left: 3px solid #0284c7;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #0c4a6e;
+            margin-bottom: 15px;
+        }
+        .usage-context strong {
+            color: #0c4a6e;
+        }
+
+        .adaptations {
+            margin-top: 15px;
+        }
+        .adaptations h4 {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .adaptation-item {
+            background: #f9fafb;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #333;
+        }
+        .adaptation-label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .how-to-use {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .how-to-use h2 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .step {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .step::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #0284c7;
+        }
+
+        .copy-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .copy-button:hover {
+            background: #0166a1;
+        }
+        .copy-button:active {
+            background: #0c4a6e;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            padding: 20px;
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #92400e;
+        }
+        .footer-note strong {
+            color: #b45309;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .copy-button { display: none; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            .container { padding: 20px; }
+            .card-header { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 3 Prompts Prêts à l'Emploi</h1>
+        <p class="subtitle">Copy-Paste pour les PME/Freelances</p>
+
+        <div class="intro">
+            <strong>💡 Comment ça marche :</strong> Chaque prompt ci-dessous est prêt à copier-coller dans votre IA. 
+            Remplissez les [CROCHETS] avec vos infos et c'est parti. Adaptez selon votre contexte.
+        </div>
+
+        <!-- PROMPT 1 : REFORMULATION PRO -->
+        <div class="prompt-card 1">
+            <div class="card-header">
+                <span class="card-emoji">✍️</span>
+                Prompt 1 : Reformulation Pro
+            </div>
+            <div class="card-content">
+                <div class="usage-context">
+                    <strong>Idéal pour :</strong> Transformer un brouillon/idée en texte professionnel.
+                    <br>Usage : emails clients, posts LinkedIn, propositions commerciales, brouillons.
+                </div>
+
+                <div class="section-label">Le Prompt (à Copier)</div>
+                <div class="prompt-box">Tu es un expert en rédaction professionnelle et copywriting.
+Mon secteur : [e-commerce / services / digital / autre]
+Mon audience : [dirigeants PME / clients grand public / décideurs IT]
+Ton général : [formel / chaud / direct / éducatif]
+
+Voici mon brouillon : [colez votre texte brut ici]
+
+Tâche : 
+- Reformule en 3 versions = 3 styles différents
+- Version 1 = formel et rassurant
+- Version 2 = énergique et commercial
+- Version 3 = amical et conversationnel
+
+Format : chaque version en max 200 mots, avec CTA claire.
+
+À chaque réponse, commence par 🐦</div>
+
+                <div class="description">
+                    <strong>Pourquoi ça marche :</strong> Ce prompt utilise la méthode R.C.T.F.E. (Rôle = expert, 
+                    Contexte = votre secteur/audience, Tâche = reformuler, Format = 3 versions, Exemples = style).
+                </div>
+
+                <div class="tips">
+                    <strong>💡 Conseil :</strong> Une fois les 3 versions, demandez : "Quel ton résonne le plus avec mes clients ? 
+                    Affine le style vainqueur." Itération = clé du succès.
+                </div>
+
+                <div class="adaptations">
+                    <h4>📋 Adaptations Rapides :</h4>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Email client difficile :</span>
+                        Remplacez "3 styles" par "1 version ferme mais bienveillante"
+                    </div>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Post LinkedIn :</span>
+                        Format = "150 car max, avec hook choc en début"
+                    </div>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Pitch investisseurs :</span>
+                        Ton = "data-driven, 0 émotion, focus ROI"
+                    </div>
+                </div>
+
+                <button class="copy-button" onclick="copyPrompt(1)">Copier le Prompt</button>
+            </div>
+        </div>
+
+        <!-- PROMPT 2 : EMAIL DE RELANCE -->
+        <div class="prompt-card 2">
+            <div class="card-header">
+                <span class="card-emoji">💌</span>
+                Prompt 2 : Email de Relance (Client Inactif)
+            </div>
+            <div class="card-content">
+                <div class="usage-context">
+                    <strong>Idéal pour :</strong> Reconquérir un client qui ne répond plus.
+                    <br>Usage : clients 3-6 mois inactifs, devis non signés, leads abandonnés.
+                </div>
+
+                <div class="section-label">Le Prompt (à Copier)</div>
+                <div class="prompt-box">Tu es un expert en relation client et reconquête.
+
+Contexte client :
+- Nom/pseudo : [Client A / Jean / Prospect]
+- Secteur : [le tien]
+- Dernier contact : [3 mois ago / 6 mois / "jamais répondu à mon devis"]
+- Raison probable d'inactivité : [budget serré ? changement / équipe ? pas prioritaire ?]
+
+Tâche : Crée 2 versions d'email de relance personnalisé
+- Version 1 = humble et service-first (offre une aide gratuite)
+- Version 2 = assertif et FOMO (dernière chance avant archivage)
+
+Format :
+- Chacun : max 150 mots
+- Structure : accroche personnelle → problème/bénéfice → micro-CTA
+- Ton : professionnel, pas désespéré
+
+À chaque réponse, commence par 🐦</div>
+
+                <div class="description">
+                    <strong>Pourquoi ça marche :</strong> Les 2 approches couvrent les 2 cas : 
+                    soit il faut le réengager doucement, soit le pousser. L'IA génère les deux.
+                </div>
+
+                <div class="tips">
+                    <strong>💡 Conseil :</strong> Après réception, demandez : "Affine la Version 1 avec 1-2 micro-services 
+                    gratuits que je peux proposer". Spécificité = plus de réponses.
+                </div>
+
+                <div class="adaptations">
+                    <h4>📋 Adaptations Rapides :</h4>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Devis non signé :</span>
+                        "Problème probable = prix. Propose une version light/allégée."
+                    </div>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Lead jamais converti :</span>
+                        "Raison = manque de confiance. Ajoute une social proof (cas client)."
+                    </div>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Client VIP perdu :</span>
+                        "Version 1 = très personnalisé. Version 2 = offre exclusive."
+                    </div>
+                </div>
+
+                <button class="copy-button" onclick="copyPrompt(2)">Copier le Prompt</button>
+            </div>
+        </div>
+
+        <!-- PROMPT 3 : ANALYSE CONCURRENCE -->
+        <div class="prompt-card 3">
+            <div class="card-header">
+                <span class="card-emoji">🔍</span>
+                Prompt 3 : Analyse Concurrence Rapide
+            </div>
+            <div class="card-content">
+                <div class="usage-context">
+                    <strong>Idéal pour :</strong> Comprendre vos concurrents rapidement.
+                    <br>Usage : benchmark, positionnement, stratégie tarifaire, points de différenciation.
+                </div>
+
+                <div class="section-label">Le Prompt (à Copier)</div>
+                <div class="prompt-box">Tu es un analyste stratégique spécialisé en [votre secteur].
+
+Contexte : Je suis [votre positionnement], ciblant [votre cible].
+
+Tâche : Analyse ces 2-3 concurrents :
+1. [Nom concurrent 1] → [son URL ou sa description]
+2. [Nom concurrent 2] → [son URL ou sa description]
+3. [Nom concurrent 3] → [son URL ou sa description]
+
+Pour chacun, identifie :
+- Positionnement principal (en 1 phrase)
+- Offres clés (3-4 points)
+- Points forts visibles
+- Points faibles/opportunités pour moi
+- Tarification si visible
+
+Format : tableau ou sections claires.
+Ajoute une section synthèse = "Où je dois me différencier"
+
+À chaque réponse, commence par 🐦</div>
+
+                <div class="description">
+                    <strong>Pourquoi ça marche :</strong> L'IA analyse rapidement avec recherche web. 
+                    Elle synthétise et propose des angles de différenciation. Très utile avant relancer sa stratégie.
+                </div>
+
+                <div class="tips">
+                    <strong>💡 Conseil :</strong> Après réception, demandez : "Sur les 3 points où je suis fort, 
+                    génère-moi un messaging qui capitalize dessus". Continue la chaîne d'itération.
+                </div>
+
+                <div class="adaptations">
+                    <h4>📋 Adaptations Rapides :</h4>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Benchmark tarifaire :</span>
+                        Focus = "Tarification : modèle (abonnement? à l'acte?), prix d'entrée, prix premium"
+                    </div>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Analyse contenu :</span>
+                        Focus = "Thèmes blog, fréquence publication, type contenu (tuto/avis/success stories?)"
+                    </div>
+                    <div class="adaptation-item">
+                        <span class="adaptation-label">Analyse communication :</span>
+                        Focus = "Ton, messaging clé, promesses principales, qui ils ciblent vraiment"
+                    </div>
+                </div>
+
+                <button class="copy-button" onclick="copyPrompt(3)">Copier le Prompt</button>
+            </div>
+        </div>
+
+        <!-- HOW TO USE -->
+        <div class="how-to-use">
+            <h2>🎯 Comment les Utiliser (Workflow)</h2>
+            <div class="step">
+                <strong>Étape 1 :</strong> Copiez le prompt complet dans votre IA (Claude, ChatGPT, ou autre)
+            </div>
+            <div class="step">
+                <strong>Étape 2 :</strong> Remplissez les [CROCHETS] avec VOS informations
+            </div>
+            <div class="step">
+                <strong>Étape 3 :</strong> Collez votre contexte/document si demandé
+            </div>
+            <div class="step">
+                <strong>Étape 4 :</strong> L'IA répond. Relisez et adaptez (jamais 100% prêt à utiliser)
+            </div>
+            <div class="step">
+                <strong>Étape 5 :</strong> Itérez : "Plus court", "Ajoute [chose]", "Ton moins [truc]"
+            </div>
+            <div class="step">
+                <strong>Étape 6 :</strong> Utilisez le résultat + vérifiez les faits importants
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-note">
+            <strong>⚠️ Important :</strong> Ces prompts sont des bases. 
+            Chaque utilisation doit être adaptée à votre contexte spécifique. 
+            Ne mettez JAMAIS de données sensibles (noms clients réels, SIRET, données RH) sans anonymiser d'abord.
+            Testez en compte personnel avant d'utiliser en professionnel avec des données réelles.
+        </div>
+    </div>
+
+    <script>
+        function copyPrompt(num) {
+            let text = "";
+            if (num === 1) {
+                text = `Tu es un expert en rédaction professionnelle et copywriting.
+Mon secteur : [e-commerce / services / digital / autre]
+Mon audience : [dirigeants PME / clients grand public / décideurs IT]
+Ton général : [formel / chaud / direct / éducatif]
+
+Voici mon brouillon : [colez votre texte brut ici]
+
+Tâche : 
+- Reformule en 3 versions = 3 styles différents
+- Version 1 = formel et rassurant
+- Version 2 = énergique et commercial
+- Version 3 = amical et conversationnel
+
+Format : chaque version en max 200 mots, avec CTA claire.
+
+À chaque réponse, commence par 🐦`;
+            } else if (num === 2) {
+                text = `Tu es un expert en relation client et reconquête.
+
+Contexte client :
+- Nom/pseudo : [Client A / Jean / Prospect]
+- Secteur : [le tien]
+- Dernier contact : [3 mois ago / 6 mois / "jamais répondu à mon devis"]
+- Raison probable d'inactivité : [budget serré ? changement / équipe ? pas prioritaire ?]
+
+Tâche : Crée 2 versions d'email de relance personnalisé
+- Version 1 = humble et service-first (offre une aide gratuite)
+- Version 2 = assertif et FOMO (dernière chance avant archivage)
+
+Format :
+- Chacun : max 150 mots
+- Structure : accroche personnelle → problème/bénéfice → micro-CTA
+- Ton : professionnel, pas désespéré
+
+À chaque réponse, commence par 🐦`;
+            } else if (num === 3) {
+                text = `Tu es un analyste stratégique spécialisé en [votre secteur].
+
+Contexte : Je suis [votre positionnement], ciblant [votre cible].
+
+Tâche : Analyse ces 2-3 concurrents :
+1. [Nom concurrent 1] → [son URL ou sa description]
+2. [Nom concurrent 2] → [son URL ou sa description]
+3. [Nom concurrent 3] → [son URL ou sa description]
+
+Pour chacun, identifie :
+- Positionnement principal (en 1 phrase)
+- Offres clés (3-4 points)
+- Points forts visibles
+- Points faibles/opportunités pour moi
+- Tarification si visible
+
+Format : tableau ou sections claires.
+Ajoute une section synthèse = "Où je dois me différencier"
+
+À chaque réponse, commence par 🐦`;
+            }
+            
+            if (text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const btn = event.target;
+                    const originalText = btn.innerText;
+                    btn.innerText = "✓ Copié !";
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    alert('Erreur copie. Sélectionnez et copiez manuellement.');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

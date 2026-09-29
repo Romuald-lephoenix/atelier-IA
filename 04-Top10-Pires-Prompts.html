@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Pires Prompts - Avant/Après</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .intro {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            color: #92400e;
+        }
+        .prompt-pair {
+            margin-bottom: 35px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .prompt-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .prompt-header .numero {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+
+        .prompt-content {
+            padding: 20px;
+        }
+
+        .avant, .apres {
+            margin-bottom: 15px;
+        }
+        .avant h3, .apres h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .avant h3 { color: #ef4444; }
+        .apres h3 { color: #10b981; }
+
+        .prompt-box {
+            background: #f3f4f6;
+            border-left: 3px solid;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #1f2937;
+        }
+        .avant .prompt-box {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+        .apres .prompt-box {
+            background: #ecfdf5;
+            border-left-color: #10b981;
+        }
+
+        .lecon {
+            background: #ede9fe;
+            border-left: 3px solid #8b5cf6;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 15px;
+            color: #5b21b6;
+        }
+        .lecon strong {
+            color: #6d28d9;
+        }
+        .probleme {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .solution {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #ecfdf5;
+            color: #166534;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hint-box {
+            background: #f0f9ff;
+            border-left: 3px solid #0284c7;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #0c4a6e;
+            margin-top: 15px;
+        }
+        .hint-box strong {
+            color: #0c4a6e;
+        }
+
+        .recap {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f0f9ff;
+            border: 2px solid #0284c7;
+            border-radius: 8px;
+        }
+        .recap h2 {
+            color: #0284c7;
+            margin-bottom: 15px;
+        }
+        .recap ol {
+            padding-left: 25px;
+            color: #333;
+        }
+        .recap li {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            page-break-inside: avoid;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚫 Top 10 Pires Prompts</h1>
+        <p class="subtitle">Erreurs Courantes & Comment les Corriger</p>
+
+        <div class="intro">
+            <strong>📢 Contexte :</strong> Ces 10 erreurs sont les plus fréquentes quand on débute avec l'IA. 
+            Chaque exemple montre le MAUVAIS prompt → le BON prompt → la leçon à retenir.
+        </div>
+
+        <!-- PIRE #1 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">1</span>
+                Le Prompt Flou
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Trop générique, pas de contexte</div>
+                    <div class="prompt-box">Aide-moi avec mon email</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Contexte + Tâche précise</div>
+                    <div class="prompt-box">Tu es un consultant senior.
+J'ai un client énervé depuis 3 jours.
+Crée 3 versions d'un email d'excuses professionnel : une formelle, une chaleureuse, une directe.
+Format : max 150 mots chacune, avec CTA claire.</div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> "Aide-moi" donne 1000 réponses différentes. 
+                    Ajoute Rôle + Contexte + Tâche + Format. L'IA devient 5x plus utile.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #2 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">2</span>
+                Le Prompt Trop Long & Embrouillé
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Trop d'infos à la fois, pas de structure</div>
+                    <div class="prompt-box">Donc voilà j'ai un projet qui est assez compliqué et j'aimerais que tu m'aides à organiser ma stratégie marketing et aussi à trouver des idées de contenu pour mes réseaux sociaux parce que actuellement je ne sais pas vraiment comment commencer et j'ai pas beaucoup de temps non plus et mon budget est limité et je dois cibler les femmes de 30 à 50 ans et aussi peut-être les hommes aussi du coup voilà j'aimerais que tu me proposes quelque chose qui marche bien voilà</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Diviser en 2 demandes claires</div>
+                    <div class="prompt-box">DEMANDE 1 : Rôle = stratège marketing. Contexte = PME services, budget €1k/mois, cible femmes 30-50 ans. Tâche = 3 piliers stratégie marketing 2026. Format = 1 page, structurée.
+
+DEMANDE 2 : Rôle = community manager spé LinkedIn. Tâche = 4 idées contenu premium adaptées. Format = titre + 3 bullet/idée.</div>
+                    <div class="hint-box">
+                        💡 <strong>Conseil :</strong> Attends la réponse 1, puis demande 2. Sinon utilise numérotation claire.
+                    </div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> L'IA peut se perdre dans les textes trop longs. 
+                    Dividez les gros projets en sous-tâches numérotées.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #3 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">3</span>
+                Le Prompt avec Données Sensibles
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Donnéesrisk RGPD + données perso exposées</div>
+                    <div class="prompt-box">Analyse ces 3 clients :
+- Jean Dupont, jean@email.fr, SIRET 123456789, revenu 150k
+- Sarah Martin, sarah@corporate.fr, SIRET 987654321, CA 500k
+- Pierre Bernard, pierre@startup.fr, SIRET 555555555, revenu -50k
+
+Qui est en difficulté ?</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Anonymiser + seules infos nécessaires</div>
+                    <div class="prompt-box">Analyse ces 3 profils anonymisés (Client A, B, C) :
+- Client A : Services, revenu annuel 150k, stable depuis 3 ans
+- Client B : Tech, CA 500k, croissance 30%/an
+- Client C : Startup, déficitaire depuis création (-50k/an)
+
+Quels signaux de risque tu detects ? Quelles actions recommandes-tu ?</div>
+                </div>
+
+                <div class="hint-box">
+                    ⚠️ <strong>RGPD Alert :</strong> Jamais noms + emails + SIRET directs. 
+                    Utilisez des alias (Client A, Prospect 1, etc) + données génériques.
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> Anonymisez TOUJOURS avant de mettre des données dans une IA publique. 
+                    Contacter votre DPO en cas de doute.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #4 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">4</span>
+                Le Prompt qui Suppose un Format
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Pas de format spécifié, résultat aléatoire</div>
+                    <div class="prompt-box">Comment gérer un client difficile ?</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Format précis</div>
+                    <div class="prompt-box">Comment gérer un client difficile ?
+Format : 5 tactiques claires.
+Chacune = titre + 2 lignes d'explication + exemple concret.
+Ton : professionnel, actionnable, bienveillant.
+Longueur totale : max 500 mots.</div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> "Format" change TOUT. 
+                    Spécifiez : nombre de points, longueur, structure (liste/tableau/paragraphes), ton.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #5 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">5</span>
+                Le Prompt sans Itération
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : On repart de zéro à chaque fois</div>
+                    <div class="prompt-box">Prompt 1 : "Crée 3 posts LinkedIn"
+[IA répond]
+Prompt 2 : "Ajoute des chiffres aux posts"
+[L'IA recrée les 3 posts de zéro, et oublie les détails]</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Ajouter Canarie + itération</div>
+                    <div class="prompt-box">Prompt 1 : "Crée 3 posts LinkedIn. À chaque réponse, commence par 🐦."
+[IA répond : "🐦 Voici les 3 posts..."]
+Prompt 2 : "Ajoute des chiffres/stats au post 2"
+[IA répond : "🐦 Voici le post 2 enrichi..."] ← Contexte gardé !</div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> Utilisez le Canarie 🐦 pour que l'IA se souvienne. 
+                    Sinon c'est comme expliquer le contexte à quelqu'un de nouveau à chaque fois.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #6 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">6</span>
+                Le Prompt qui Suppose une Compréhension Implicite
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Trop d'implicite, références confuses</div>
+                    <div class="prompt-box">Adapte le plan pour notre machin cette année</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Explicite + Document si possible</div>
+                    <div class="prompt-box">Rôle = stratège d'entreprise.
+Contexte = PME SaaS, 50 salariés, budget 2027 en hausse 20%.
+Tâche = adapter le plan marketing 2026 (ci-joint) pour 2027.
+Focus = acquisition 3x + retention.
+Format = document structuré, sections avant/après, avec ROI estimé.
+
+[Puis collez le plan 2026]</div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> L'IA n'a pas le contexte implicite. 
+                    Nommez clairement : qui, quoi, quand, où, pourquoi.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #7 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">7</span>
+                Le Prompt qui Demande de Tricher
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Demande malhonnête</div>
+                    <div class="prompt-box">Invente-moi des chiffres de croissance convaincants pour mon pitch au banquier</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Utilise les vrais chiffres</div>
+                    <div class="prompt-box">Rôle = consultant stratégie financière.
+Voici mes vrais chiffres 2025 : CA 500k, croissance 15%, marge 30%.
+Tâche = présenter ces chiffres au banquier de façon optimiste mais honnête.
+Format = structure pitch : marché → positionnement → chiffres clés → projection 2027 conservative.</div>
+                </div>
+
+                <div class="hint-box">
+                    ⚠️ <strong>Important :</strong> Les faux chiffres = fraude. Délit pénal. 
+                    L'IA peut vous aider à présenter vos vrais chiffres mieux.
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> L'IA n'invente pas les faits pour vous. 
+                    Elle reformule, améliore, mais avec vos vrais données.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #8 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">8</span>
+                Le Prompt qui Oublie de Vérifier
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Pas de vérification, hallucinations</div>
+                    <div class="prompt-box">Donne-moi 5 études scientifiques sur l'impact du marketing digital.
+
+[L'IA invente des titres convaincants mais faux]
+[Vous les citez au banquier]
+[Banquier googlise = arnaque détectée]</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Demander sources vérifiables</div>
+                    <div class="prompt-box">Donne-moi 5 études sur l'impact marketing digital.
+Instructions : 
+- Cite uniquement des sources réelles (Google Scholar, MIT, Harvard Business Review)
+- Donne le titre exact, l'auteur, l'année
+- Je vais vérifier chaque source
+
+[Puis vous vérifiez sur Google Scholar / site de la revue]</div>
+
+                    <div class="hint-box">
+                        💡 <strong>Verbe clé :</strong> Demander "Cite tes sources" force l'IA à être + rigoureux.
+                    </div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> L'IA peut halluciner avec confiance. 
+                    Toujours vérifier : chiffres, noms, études, faits importants.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #9 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">9</span>
+                Le Prompt qui Demande l'Impossible
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Demandes hors limites IA</div>
+                    <div class="prompt-box">Connecte-toi à mon CRM et mets à jour tous les clients</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Demandes réalistes</div>
+                    <div class="prompt-box">Crée un script CSV de mise à jour client.
+Rôle = data engineer.
+Input = liste clients existants + nouvelles données.
+Output = fichier CSV avec colonnes : ID | Nom | Email | Segment | Mise à Jour.
+
+[Vous exécutez le script dans votre CRM manuellement]</div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> L'IA ne se connecte pas à vos systèmes en live. 
+                    Elle génère des plans/scripts/templates que VOUS exécutez.
+                </div>
+            </div>
+        </div>
+
+        <!-- PIRE #10 -->
+        <div class="prompt-pair">
+            <div class="prompt-header">
+                <span class="numero">10</span>
+                Le Prompt sans Feedback
+            </div>
+            <div class="prompt-content">
+                <div class="avant">
+                    <h3>❌ MAUVAIS</h3>
+                    <div class="probleme">Problème : Accepter la première réponse</div>
+                    <div class="prompt-box">Crée un plan marketing
+[IA répond]
+[Vous prenez tel quel sans feedback]</div>
+                </div>
+
+                <div class="apres">
+                    <h3>✓ BON</h3>
+                    <div class="solution">Solution : Itération active</div>
+                    <div class="prompt-box">Crée un plan marketing
+[IA répond]
+[Vous dites : "Plus focus ROI, moins théorie. Ajoute budget par canal"]
+[IA v2]
+[Vous dites : "Perfecto mais ajoute timeline Gantt mois par mois"]
+[IA v3 = final]</div>
+
+                    <div class="hint-box">
+                        💡 <strong>Le secret :</strong> L'itération est CLEF. 
+                        Chaque "Refais ça + précis" rapproche de votre besoin exact.
+                    </div>
+                </div>
+
+                <div class="lecon">
+                    <strong>📚 Leçon :</strong> La 1ère réponse = base, pas finale. 
+                    C'est comme un brouillon : relisez, réagissez, améliorez.
+                </div>
+            </div>
+        </div>
+
+        <!-- RÉCAP -->
+        <div class="recap">
+            <h2>✅ Les 10 Règles d'Or pour Éviter Ces Pièges</h2>
+            <ol>
+                <li><strong>Soyez spécifique :</strong> Donnez Rôle + Contexte + Tâche + Format</li>
+                <li><strong>Divisez les gros projets :</strong> Une demande par prompt</li>
+                <li><strong>Anonymisez vos données :</strong> Jamais noms/emails/SIRET directs</li>
+                <li><strong>Précisez le format :</strong> Nombre de points, longueur, structure</li>
+                <li><strong>Utilisez le Canarie 🐦 :</strong> Confirme que l'IA mémorise le contexte</li>
+                <li><strong>Soyez explicite :</strong> Ne supposez pas que l'IA comprend l'implicite</li>
+                <li><strong>Restez honnête :</strong> Utilisez les vrais chiffres, ne trichez pas</li>
+                <li><strong>Vérifiez les faits :</strong> Hallucinations possibles sur données/chiffres</li>
+                <li><strong>Demandez du réaliste :</strong> L'IA génère du contenu, n'accède pas à vos systèmes</li>
+                <li><strong>Itérez activement :</strong> Chaque réponse = base pour le feedback suivant</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

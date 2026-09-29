@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist IA Saine - Les 3 Commandements</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .commandements {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .commandement {
+            border-left: 5px solid;
+            padding: 25px;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+        .commandement.one { border-left-color: #ff6b6b; }
+        .commandement.two { border-left-color: #4ecdc4; }
+        .commandement.three { border-left-color: #45b7d1; }
+        .commandement h2 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .commandement.one h2 { color: #ff6b6b; }
+        .commandement.two h2 { color: #4ecdc4; }
+        .commandement.three h2 { color: #45b7d1; }
+        .checklist {
+            list-style: none;
+            margin-top: 15px;
+        }
+        .checklist li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 0.95em;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+            color: #999;
+        }
+        .checklist.ko li::before {
+            content: "✗";
+            color: #ff6b6b;
+        }
+        .section-title {
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .deux-colonnes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .colonne {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .colonne.oui {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+        }
+        .colonne.non {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+        }
+        .colonne h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .colonne.oui h3 { color: #10b981; }
+        .colonne.non h3 { color: #ef4444; }
+        .colonne ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .colonne li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95em;
+        }
+        .colonne.oui li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .colonne.non li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .outils-par-cas {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            border-radius: 6px;
+        }
+        .outils-par-cas h3 {
+            color: #0284c7;
+            margin-bottom: 15px;
+        }
+        .cas {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .cas:last-child {
+            border-bottom: none;
+        }
+        .cas-titre {
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+        .cas-outil {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .reference {
+            margin-top: 40px;
+            padding: 15px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .deux-colonnes {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .commandement {
+                padding: 20px;
+            }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            page-break-after: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Checklist IA Saine</h1>
+        <p class="subtitle">Les 3 Commandements pour utiliser l'IA sans risque</p>
+
+        <div class="commandements">
+            <div class="commandement one">
+                <h2>① TRANSPARENCE</h2>
+                <p style="margin-bottom: 15px;">Informer vos clients et collaborateurs de l'usage IA dans vos processus.</p>
+                <ul class="checklist">
+                    <li class="section-title">À FAIRE</li>
+                    <li>Mentionner l'usage IA dans votre politique de confidentialité</li>
+                    <li>Prévenir votre client si vous utilisez l'IA pour traiter sa demande</li>
+                    <li>Documenter où l'IA est utilisée dans votre processus</li>
+                    <li>Informer votre équipe des outils IA approuvés</li>
+                </ul>
+                <ul class="checklist ko">
+                    <li class="section-title">À NE JAMAIS FAIRE</li>
+                    <li>Utiliser l'IA en cachette sans en informer personne</li>
+                    <li>Prétendre que tout est fait manuellement si l'IA a aidé</li>
+                    <li>Ignorer les demandes de vos clients sur l'usage de leurs données</li>
+                </ul>
+            </div>
+
+            <div class="commandement two">
+                <h2>② CONSENTEMENT</h2>
+                <p style="margin-bottom: 15px;">Demander la permission avant de mettre les données personnelles dans une IA.</p>
+                <ul class="checklist">
+                    <li class="section-title">À FAIRE</li>
+                    <li>Obtenir l'accord écrit avant de traiter les données perso en IA</li>
+                    <li>Permettre aux gens de refuser d'utiliser une IA</li>
+                    <li>Proposer une alternative sans IA si demandé</li>
+                    <li>Anonymiser les données avant analyse IA</li>
+                </ul>
+                <ul class="checklist ko">
+                    <li class="section-title">À NE JAMAIS FAIRE</li>
+                    <li>Envoyer un email client "Cher Jean Martin" directement dans une IA</li>
+                    <li>Mettre les noms, emails, SIRET ou téléphones sans protection</li>
+                    <li>Supposer que le consentement est donné juste parce qu'on utilise un service</li>
+                </ul>
+            </div>
+
+            <div class="commandement three">
+                <h2>③ SÉCURITÉ</h2>
+                <p style="margin-bottom: 15px;">Protéger les données sensibles avec des outils validés par votre entreprise.</p>
+                <ul class="checklist">
+                    <li class="section-title">À FAIRE</li>
+                    <li>Utiliser des outils professionnels/enterprise pour les données sensibles</li>
+                    <li>Vérifier la politique de confidentialité de l'outil IA</li>
+                    <li>Stocker les données sensibles localement ou dans vos serveurs</li>
+                    <li>Chiffrer vos données en transit</li>
+                </ul>
+                <ul class="checklist ko">
+                    <li class="section-title">À NE JAMAIS FAIRE</li>
+                    <li>Copier/coller des données clients dans ChatGPT grand public</li>
+                    <li>Utiliser un compte perso pour du travail professionnel sensible</li>
+                    <li>Oublier que ce que tu envoies peut rester sur les serveurs</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 50px; margin-bottom: 20px;">📋 Données à NE JAMAIS mettre dans une IA</h2>
+        <div class="deux-colonnes">
+            <div class="colonne non">
+                <h3>❌ INTERDITS (100%)</h3>
+                <ul>
+                    <li>Noms, prénoms, emails de clients</li>
+                    <li>Numéros de téléphone (même anonymisés)</li>
+                    <li>SIRET, SIREN, numéro d'entreprise</li>
+                    <li>IBAN, numéro de CB, données de paiement</li>
+                    <li>Données médicales ou santé</li>
+                    <li>Données RH confidentielles (salaires, évaluations)</li>
+                    <li>Contrats signés ou confidentiels</li>
+                    <li>Secrets d'affaires ou recettes</li>
+                </ul>
+            </div>
+            <div class="colonne oui">
+                <h3>✓ AUTORISÉ (avec prudence)</h3>
+                <ul>
+                    <li>Données anonymisées ou pseudonymisées</li>
+                    <li>Données publiques (articles, blog, sites web)</li>
+                    <li>Informations génériques (secteur, taille d'entreprise)</li>
+                    <li>Textes brouillons personnels non sensibles</li>
+                    <li>Questions de connaissance générale</li>
+                    <li>Code informatique non-propriétaire</li>
+                    <li>Demandes de rédaction/reformulation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="outils-par-cas">
+            <h3>🎯 Quel Outil pour quel Cas ? (Version 2026)</h3>
+            <div class="cas">
+                <div class="cas-titre">Données RH, contrats, données sensibles</div>
+                <div class="cas-outil">→ <strong>Mistral Enterprise/Vibe Enterprise</strong> (hébergement UE) OU <strong>Claude for Work/Enterprise</strong></div>
+            </div>
+            <div class="cas">
+                <div class="cas-titre">Données professionnelles sans confidentialité max</div>
+                <div class="cas-outil">→ <strong>Claude Pro</strong> (30j de conservation) OU <strong>ChatGPT Business/API</strong> (pas d'entraînement)</div>
+            </div>
+            <div class="cas">
+                <div class="cas-titre">Brouillons perso / idées / réseaux sociaux</div>
+                <div class="cas-outil">→ Tous les outils ok (comptes perso acceptés)</div>
+            </div>
+            <div class="cas">
+                <div class="cas-titre">Recherche web + données pros</div>
+                <div class="cas-outil">→ <strong>Claude Pro</strong> (contexte 200k) OU <strong>Gemini Workspace</strong> (si Google)</div>
+            </div>
+            <div class="cas">
+                <div class="cas-titre">Code propriétaire / données hautement sensibles</div>
+                <div class="cas-outil">→ <strong>Mistral Enterprise</strong> (open source possible) OU déploiement local auto-hébergé</div>
+            </div>
+        </div>
+
+        <div class="reference">
+            <strong>⚠️ Rappel légal :</strong> Vous, votre manager ou votre DPO (Data Protection Officer) êtes responsables de vérifier que l'usage IA est conforme au RGPD. Le consentement des personnes doit être explicite et documenté. Cette checklist est un guide pédagogique, pas un conseil juridique. En cas de doute, consultez votre service juridique ou un expert RGPD.
+        </div>
+    </div>
+</body>
+</html>

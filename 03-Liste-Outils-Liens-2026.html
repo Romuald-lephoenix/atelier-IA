@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panorama 2026 - Outils IA & Confidentialité</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .date-info {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 12px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #92400e;
+        }
+        
+        /* Matrice de décision */
+        .matrice {
+            overflow-x: auto;
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        th {
+            background: #1e40af;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #1e40af;
+        }
+        td {
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        .outil-nom {
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .badge.excellent { background: #dcfce7; color: #166534; }
+        .badge.bon { background: #dbeafe; color: #1e40af; }
+        .badge.moyen { background: #fef3c7; color: #92400e; }
+        .badge.attention { background: #fee2e2; color: #991b1b; }
+
+        /* Fiches outils */
+        .outils-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .fiche {
+            border: 2px solid;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+        }
+        .fiche.openai { border-color: #10b981; }
+        .fiche.anthropic { border-color: #0284c7; }
+        .fiche.google { border-color: #ea580c; }
+        .fiche.mistral { border-color: #7c3aed; }
+
+        .fiche-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .fiche-logo {
+            font-size: 2.2em;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .fiche h2 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+        .fiche h2.openai { color: #10b981; }
+        .fiche h2.anthropic { color: #0284c7; }
+        .fiche h2.google { color: #ea580c; }
+        .fiche h2.mistral { color: #7c3aed; }
+
+        .fiche-pays {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .fiche-section {
+            margin-bottom: 15px;
+        }
+        .fiche-section h3 {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .fiche-content {
+            font-size: 0.9em;
+            color: #333;
+            line-height: 1.5;
+        }
+        .fiche ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .fiche li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .fiche li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+
+        .rgpd-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .rgpd-badge.gold { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+        .rgpd-badge.silver { background: #dbeafe; color: #1e40af; border: 1px solid #0284c7; }
+        .rgpd-badge.caution { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+
+        .matrice-decision {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            border-radius: 6px;
+        }
+        .matrice-decision h3 {
+            color: #0284c7;
+            margin-bottom: 15px;
+        }
+        .decision-row {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .decision-row:last-child {
+            border-bottom: none;
+        }
+        .decision-titre {
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+        .decision-reponse {
+            font-size: 0.95em;
+            color: #333;
+        }
+        .lien {
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        .lien:hover { text-decoration: underline; }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            page-break-inside: avoid;
+        }
+        @media (max-width: 768px) {
+            .outils-grid {
+                grid-template-columns: 1fr;
+            }
+            .matrice {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Panorama 2026 des Outils IA</h1>
+        <p class="subtitle">Confidentialité, RGPD & Comparatif Complet</p>
+
+        <div class="date-info">
+            <strong>⏰ Mis à jour :</strong> 25 septembre 2026. Les modèles, prix, offres et politiques de données évoluent régulièrement. Vérifiez directement auprès des éditeurs avant chaque utilisation.
+        </div>
+
+        <!-- MATRICE RAPIDE -->
+        <h2 style="margin-top: 40px; margin-bottom: 20px;">📊 Matrice Décision Rapide</h2>
+        <div class="matrice">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Outil</th>
+                        <th>Origine</th>
+                        <th>Point Fort</th>
+                        <th>Données Sensibles</th>
+                        <th>RGPD Entreprise</th>
+                        <th>Hébergement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="outil-nom">Mistral/Vibe</td>
+                        <td>🇫🇷 France</td>
+                        <td>Acteur français, open-source possible</td>
+                        <td><span class="badge excellent">✓ Enterprise</span></td>
+                        <td><span class="badge excellent">10/10</span></td>
+                        <td>UE par défaut</td>
+                    </tr>
+                    <tr>
+                        <td class="outil-nom">Claude</td>
+                        <td>🇺🇸 USA/Anthropic</td>
+                        <td>Meilleur reasoning, contexte 200k</td>
+                        <td><span class="badge bon">✓ For Work</span></td>
+                        <td><span class="badge bon">8/10</span></td>
+                        <td>USA (DPA dispo)</td>
+                    </tr>
+                    <tr>
+                        <td class="outil-nom">ChatGPT</td>
+                        <td>🇺🇸 USA/OpenAI</td>
+                        <td>Polyvalent, intégrations nombreuses</td>
+                        <td><span class="badge bon">✓ Business</span></td>
+                        <td><span class="badge moyen">5/10</span></td>
+                        <td>USA (options DPA)</td>
+                    </tr>
+                    <tr>
+                        <td class="outil-nom">Gemini</td>
+                        <td>🇺🇸 USA/Google</td>
+                        <td>Intégration Workspace, multimodal</td>
+                        <td><span class="badge moyen">⚠ Workspace</span></td>
+                        <td><span class="badge attention">2/10</span></td>
+                        <td>USA (+ Workspace UE opt)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FICHES OUTILS DÉTAILLÉES -->
+        <h2 style="margin-top: 50px; margin-bottom: 25px;">📋 Fiches Détaillées par Outil</h2>
+        <div class="outils-grid">
+            
+            <!-- OPENAI -->
+            <div class="fiche openai">
+                <div class="fiche-header">
+                    <div class="fiche-logo">🤖</div>
+                    <div>
+                        <h2 class="openai">ChatGPT</h2>
+                        <div class="fiche-pays">🇺🇸 OpenAI (partenaire Microsoft)</div>
+                    </div>
+                </div>
+
+                <div class="rgpd-badge moyen">⚠️ Attention RGPD</div>
+
+                <div class="fiche-section">
+                    <h3>Forces</h3>
+                    <div class="fiche-content">
+                        <ul>
+                            <li>Très polyvalent : texte, image, voix, fichiers</li>
+                            <li>Interface simple et grand public</li>
+                            <li>Écosystème d'intégrations très riche</li>
+                            <li>GPT-4o très performant</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Confidentialité</h3>
+                    <div class="fiche-content">
+                        <strong>Compte personnel :</strong> Contenus peuvent être utilisés pour l'entraînement (désactivable).<br><br>
+                        <strong>ChatGPT Business/API :</strong> Pas d'entraînement par défaut sur les entrées/sorties.<br><br>
+                        ⚠️ Ne signifie pas automatiquement « conforme RGPD ».
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Recommandation</h3>
+                    <div class="fiche-content">
+                        ✓ Brouillons, réseaux sociaux<br>
+                        ✓ Données pros non-sensibles + Business<br>
+                        ✗ Données RH/contrats/clients (sans Business)
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Liens</h3>
+                    <div class="fiche-content">
+                        <a href="https://openai.com" class="lien" target="_blank">openai.com</a><br>
+                        <a href="https://openai.com/business" class="lien" target="_blank">openai.com/business</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANTHROPIC -->
+            <div class="fiche anthropic">
+                <div class="fiche-header">
+                    <div class="fiche-logo">🧠</div>
+                    <div>
+                        <h2 class="anthropic">Claude</h2>
+                        <div class="fiche-pays">🇺🇸 Anthropic</div>
+                    </div>
+                </div>
+
+                <div class="rgpd-badge silver">✓ Bon RGPD</div>
+
+                <div class="fiche-section">
+                    <h3>Forces</h3>
+                    <div class="fiche-content">
+                        <ul>
+                            <li>Meilleur reasoning et analyse</li>
+                            <li>Contexte énorme (200k tokens)</li>
+                            <li>Excellent en rédaction et synthèse</li>
+                            <li>Outils pro avec contrôles avancés</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Confidentialité</h3>
+                    <div class="fiche-content">
+                        <strong>Claude Pro/Max :</strong> Choix utilisateur pour entraînement. Conservation 30j si refusée.<br><br>
+                        <strong>Claude for Work :</strong> Pas d'entraînement par défaut. Contrôles SSO, rôles, audit.<br><br>
+                        ⚠️ Vérification entreprise toujours nécessaire.
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Recommandation</h3>
+                    <div class="fiche-content">
+                        ✓ Données pros sans confidentialité max<br>
+                        ✓ Recherche web + contexte long<br>
+                        ✓ Données sensibles avec For Work
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Liens</h3>
+                    <div class="fiche-content">
+                        <a href="https://claude.ai" class="lien" target="_blank">claude.ai</a><br>
+                        <a href="https://www.anthropic.com" class="lien" target="_blank">anthropic.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GOOGLE -->
+            <div class="fiche google">
+                <div class="fiche-header">
+                    <div class="fiche-logo">🔍</div>
+                    <div>
+                        <h2 class="google">Gemini</h2>
+                        <div class="fiche-pays">🇺🇸 Google DeepMind</div>
+                    </div>
+                </div>
+
+                <div class="rgpd-badge caution">⚠️ Vigilance RGPD</div>
+
+                <div class="fiche-section">
+                    <h3>Forces</h3>
+                    <div class="fiche-content">
+                        <ul>
+                            <li>Intégration seamless Google Workspace</li>
+                            <li>Multimodal avancé (vidéo, audio)</li>
+                            <li>Recherche web intégrée</li>
+                            <li>Contexte long selon modèles</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Confidentialité</h3>
+                    <div class="fiche-content">
+                        <strong>Compte perso :</strong> Google peut utiliser conversations pour entraînement + révision humaine.<br><br>
+                        <strong>Gemini Workspace :</strong> Données organisationnelles protégées par Workspace.<br><br>
+                        ⚠️ Google collecte beaucoup de métadonnées.
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Recommandation</h3>
+                    <div class="fiche-content">
+                        ✓ Entreprises Google Workspace<br>
+                        ✓ Recherche web<br>
+                        ✗ Données sensibles en compte perso
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Liens</h3>
+                    <div class="fiche-content">
+                        <a href="https://gemini.google.com" class="lien" target="_blank">gemini.google.com</a><br>
+                        <a href="https://workspace.google.com" class="lien" target="_blank">workspace.google.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MISTRAL -->
+            <div class="fiche mistral">
+                <div class="fiche-header">
+                    <div class="fiche-logo">🇫🇷</div>
+                    <div>
+                        <h2 class="mistral">Vibe (Mistral)</h2>
+                        <div class="fiche-pays">🇫🇷 Mistral AI</div>
+                    </div>
+                </div>
+
+                <div class="rgpd-badge gold">✓✓ Meilleur RGPD France</div>
+
+                <div class="fiche-section">
+                    <h3>Forces</h3>
+                    <div class="fiche-content">
+                        <ul>
+                            <li>Acteur français et européen</li>
+                            <li>Excellent en français</li>
+                            <li>Modèles open-source possibles</li>
+                            <li>Données hébergées UE par défaut</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Confidentialité</h3>
+                    <div class="fiche-content">
+                        <strong>Vibe grand public :</strong> Peut entraîner par défaut (désactivable).<br><br>
+                        <strong>Vibe Enterprise :</strong> Exclu de l'entraînement. Hébergement UE. Contrôles avancés.<br><br>
+                        ✓ Meilleur pour RGPD en France.
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Recommandation</h3>
+                    <div class="fiche-content">
+                        ✓ PME/freelances France<br>
+                        ✓ Données sensibles (Enterprise)<br>
+                        ✓ Souveraineté de données
+                    </div>
+                </div>
+
+                <div class="fiche-section">
+                    <h3>Liens</h3>
+                    <div class="fiche-content">
+                        <a href="https://vibe.mistral.ai" class="lien" target="_blank">vibe.mistral.ai</a><br>
+                        <a href="https://mistral.ai" class="lien" target="_blank">mistral.ai</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MATRICE DE DÉCISION -->
+        <div class="matrice-decision">
+            <h3>🎯 Matrice de Décision Personnalisée</h3>
+            
+            <div class="decision-row">
+                <div class="decision-titre">Je suis une PME/freelance en France avec peu de budget</div>
+                <div class="decision-reponse">👉 <strong>Mistral/Vibe</strong> (grand public ok) + Claude Pro pour recherche web</div>
+            </div>
+
+            <div class="decision-row">
+                <div class="decision-titre">Je suis une PME avec des données clients sensibles</div>
+                <div class="decision-reponse">👉 <strong>Mistral Enterprise</strong> (hébergement UE) OU <strong>Claude for Work</strong></div>
+            </div>
+
+            <div class="decision-row">
+                <div class="decision-titre">Mon entreprise utilise Google Workspace</div>
+                <div class="decision-reponse">👉 <strong>Gemini Workspace</strong> (données protégées) OU <strong>Claude for Work</strong> en parallèle</div>
+            </div>
+
+            <div class="decision-row">
+                <div class="decision-titre">Je veux juste tester, essayer tous les outils</div>
+                <div class="decision-reponse">👉 Tous acceptés en compte perso, SANS données sensibles/clients</div>
+            </div>
+
+            <div class="decision-row">
+                <div class="decision-titre">Je dois manipuler du code/données très propriétaires</div>
+                <div class="decision-reponse">👉 <strong>Mistral Enterprise</strong> (modèles open-source) OU déploiement local auto-hébergé</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: #f3f4f6; border-radius: 6px; font-size: 0.9em; color: #666;">
+            <strong>💡 Rappel :</strong> Cette matrice est un guide pédagogique. Vérifiez les conditions actuelles directement auprès des éditeurs et consultez votre DPO avant tout déploiement en production avec des données sensibles.
+        </div>
+    </div>
+</body>
+</html>

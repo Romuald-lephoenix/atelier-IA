@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template R.C.T.F.E. - La Méthode de Briefing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1em;
+            text-align: center;
+        }
+        .intro {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #fafafa;
+            border-left: 4px solid;
+            border-radius: 6px;
+        }
+        .section.r { border-left-color: #ef4444; }
+        .section.c { border-left-color: #f97316; }
+        .section.t { border-left-color: #eab308; }
+        .section.f { border-left-color: #22c55e; }
+        .section.e { border-left-color: #0ea5e9; }
+        .section.canarie { border-left-color: #8b5cf6; }
+
+        .section h2 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section.r h2 { color: #ef4444; }
+        .section.c h2 { color: #f97316; }
+        .section.t h2 { color: #eab308; }
+        .section.f h2 { color: #22c55e; }
+        .section.e h2 { color: #0ea5e9; }
+        .section.canarie h2 { color: #8b5cf6; }
+
+        .letter {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: currentColor;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .section.r .letter { background: #ef4444; }
+        .section.c .letter { background: #f97316; }
+        .section.t .letter { background: #eab308; color: #333; }
+        .section.f .letter { background: #22c55e; }
+        .section.e .letter { background: #0ea5e9; }
+        .section.canarie .letter { background: #8b5cf6; }
+
+        .question {
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+        .example {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border-left: 3px solid #9ca3af;
+        }
+        .example strong {
+            color: #374151;
+        }
+        .prompt-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            margin-top: 20px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .prompt-title {
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+        .tips {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #92400e;
+        }
+        .tips strong {
+            color: #b45309;
+        }
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+        }
+        .canarie-emoji {
+            font-size: 1.2em;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            textarea { border: 1px solid #999; }
+            .prompt-box { background: #f3f4f6; color: #1a1a1a; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.8em; }
+            .section { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Template R.C.T.F.E.</h1>
+        <p class="subtitle">La Méthode Complète pour Briefer l'IA Comme un Pro</p>
+
+        <div class="intro">
+            <strong>Conseil :</strong> Remplissez chaque section ci-dessous, puis collez-les dans votre IA en l'ordre R → C → T → F → E. 
+            En bonus, demandez à l'IA de commencer chaque réponse par 🐦 (le Canarie) pour vérifier qu'elle se souvient du contexte.
+        </div>
+
+        <!-- R : RÔLE -->
+        <div class="section r">
+            <h2><span class="letter">R</span> RÔLE</h2>
+            <div class="question">Qui es-tu dans cette conversation ?</div>
+            <div class="description">
+                Donne un rôle clair à l'IA. Elle doit savoir qui elle est : consultant, rédacteur, expert, coach, etc.
+                Plus spécifique = meilleure réponse.
+            </div>
+            <textarea id="r" placeholder="Ex: Tu es un expert en marketing digital avec 10 ans d'expérience dans les PME e-commerce..."></textarea>
+            <div class="example">
+                <strong>Exemples :</strong>
+                • Tu es un consultant en stratégie digitale spécialisé dans les PME.
+                • Tu es un rédacteur web expert en conversion et copywriting.
+                • Tu es un coach commercial bienveillant mais direct.
+            </div>
+        </div>
+
+        <!-- C : CONTEXTE -->
+        <div class="section c">
+            <h2><span class="letter">C</span> CONTEXTE</h2>
+            <div class="question">Où sommes-nous ? Qui sont les gens impliqués ?</div>
+            <div class="description">
+                Décris la situation : client énervé, décision importante à prendre, projet en urgence, etc.
+                Plus détails = plus pertinent.
+            </div>
+            <textarea id="c" placeholder="Ex: Je suis un freelance en design graphique. Mon client est un petit restaurant qui veut refaire son identité visuelle avant Noël (dans 2 mois)..."></textarea>
+            <div class="example">
+                <strong>Exemples :</strong>
+                • J'ai un client entreprise depuis 5 ans. Il est énervé car ses ventes baissent.
+                • C'est urgente. J'ai une réunion vendredi avec mon patron et j'ai besoin de convaincre.
+                • Ma cible : femmes 35-50 ans, urbaines, sensibles à l'art et au luxe.
+            </div>
+        </div>
+
+        <!-- T : TÂCHE -->
+        <div class="section t">
+            <h2><span class="letter">T</span> TÂCHE</h2>
+            <div class="question">Exactement, qu'est-ce que je veux que tu fasses ?</div>
+            <div class="description">
+                Sois précis : rédiger, analyser, reformuler, générer, comparer, etc.
+                Une action claire = une réponse ciblée.
+            </div>
+            <textarea id="t" placeholder="Ex: Crée un plan de relance client personnalisé pour reconquérir les clients inactifs depuis 6 mois..."></textarea>
+            <div class="example">
+                <strong>Exemples :</strong>
+                • Rédige 3 versions d'un email de relance professionnel.
+                • Analyse ce site concurrent et identifie ses points forts vs faibles.
+                • Reformule mon pitch de façon plus impactante et concise.
+            </div>
+        </div>
+
+        <!-- F : FORMAT -->
+        <div class="section f">
+            <h2><span class="letter">F</span> FORMAT</h2>
+            <div class="question">Comment veux-tu la réponse ? Quelle structure ?</div>
+            <div class="description">
+                Précise la longueur, la structure, le ton : 3 paragraphes, 5 points, bullet list, tableau, JSON, etc.
+            </div>
+            <textarea id="f" placeholder="Ex: Format : 3 options claires, max 150 mots chacune, ton professionnel mais chaleureux, avec CTA claire..."></textarea>
+            <div class="example">
+                <strong>Exemples :</strong>
+                • Format: 5 points en bullet, max 2 lignes par point, ton conversationnel.
+                • Format: tableau à 3 colonnes (Avantage | Risque | Action).
+                • Format: réponse en 200-300 mots, structurée en Problème → Solution → Bénéfice.
+            </div>
+        </div>
+
+        <!-- E : EXEMPLES -->
+        <div class="section e">
+            <h2><span class="letter">E</span> EXEMPLES</h2>
+            <div class="question">Montre-moi un ou deux exemples du style/format que tu veux.</div>
+            <div class="description">
+                Les exemples sont TRÈS puissants. Ça montre mieux qu'un long texte.
+                Colle un exemple client, un article que tu aimes, un style de référence.
+            </div>
+            <textarea id="e" placeholder="Ex: Voici un exemple de post LinkedIn que j'aime. Ça a le style que je veux : cheeky, avec statistique choc, hook en début..."></textarea>
+            <div class="example">
+                <strong>Exemples :</strong>
+                • Voici une email client que j'ai reçu. Je veux une réponse dans ce ton-là.
+                • Voici un article de blog que j'aime. Même structure, même longueur, même profondeur.
+                • Mon client aime ce style : conversationnel, avec chiffres, peu d'émotion, focused ROI.
+            </div>
+        </div>
+
+        <!-- CANARIE -->
+        <div class="section canarie">
+            <h2><span class="letter">🐦</span> CANARIE</h2>
+            <div class="question">Assurance que l'IA ne perd pas le contexte</div>
+            <div class="description">
+                Ajoute ceci en DÉBUT de ton prompt complet : <br><br>
+                <strong>"À chaque réponse, commence par 🐦 pour confirmer que tu as compris le contexte. 
+                Si tu ne mets pas 🐦, ça veut dire que tu as perdu le contexte et je vais te redire."</strong>
+                <br><br>
+                Pourquoi ? Le Canaire était utilisé dans les mines de charbon du XIXe siècle pour détecter les gaz toxiques. 
+                Canari mort = danger. Ici, 🐦 = contexte vivant. Pas de 🐦 = contexte perdu, il faut re-briefer.
+            </div>
+            <div class="example">
+                <strong>En pratique :</strong><br>
+                <strong>Prompt V1 :</strong> "Tu es consultant, contexte client énervé, je veux 3 options email, format court. À chaque réponse, commence par 🐦."
+                <br>
+                <strong>Réponse IA :</strong> "🐦 Bien sûr ! Voici 3 options pour calmer ton client..."
+                <br>
+                <strong>Continuation (tu dis simplement) :</strong> "Ajoute plus de détails au point 2"
+                <br>
+                <strong>Réponse IA :</strong> "🐦 Voici le point 2 enrichi..." ← L'IA n'a pas oublié ! Canari vivant ✅
+            </div>
+            <textarea id="canarie" readonly style="background: #f0f9ff; border: 2px dashed #0284c7; cursor: not-allowed;">À chaque réponse, commence par 🐦 pour confirmer que tu as bien compris le contexte. Si tu ne mets pas 🐦, ça veut dire que tu as perdu le contexte et je vais te le redire.</textarea>
+        </div>
+
+        <!-- PROMPT COMPLET -->
+        <div style="margin-top: 40px; padding: 20px; background: #f0f9ff; border-radius: 6px;">
+            <h3 style="color: #0284c7; margin-bottom: 15px;">📝 Votre Prompt Complet (à copier dans l'IA)</h3>
+            <div class="prompt-box" id="promptComplet">
+[Cliquez sur "Générer le Prompt Complet" ci-dessous]
+            </div>
+            <button onclick="genererPrompt()" style="
+                margin-top: 15px;
+                padding: 12px 24px;
+                background: #0284c7;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-weight: bold;
+                cursor: pointer;
+                font-size: 1em;
+            ">Générer le Prompt Complet</button>
+        </div>
+
+        <div class="footer">
+            <strong>💡 Conseil :</strong> Testez d'abord avec 4 sections (R+C+T+F). Ajoutez E et Canarie une fois que vous maîtrisez.
+            <br><br>
+            <strong>🔄 Itération :</strong> Si la première réponse n'est pas bonne, dites "Refais ça plus court" 
+            ou "Ajoute des chiffres". Le contexte R.C.T.F.E. reste mémorisé grâce au Canarie 🐦.
+        </div>
+    </div>
+
+    <script>
+        function genererPrompt() {
+            const r = document.getElementById('r').value || '[Rôle à remplir]';
+            const c = document.getElementById('c').value || '[Contexte à remplir]';
+            const t = document.getElementById('t').value || '[Tâche à remplir]';
+            const f = document.getElementById('f').value || '[Format à remplir]';
+            const e = document.getElementById('e').value || '[Exemples à remplir]';
+            const canarie = document.getElementById('canarie').value;
+
+            const promptComplet = `À chaque réponse, commence par 🐦 pour confirmer que tu as compris le contexte.
+
+RÔLE
+${r}
+
+CONTEXTE
+${c}
+
+TÂCHE
+${t}
+
+FORMAT
+${f}
+
+EXEMPLES
+${e}
+
+INSTRUCTION FINALE
+${canarie}`;
+
+            document.getElementById('promptComplet').textContent = promptComplet;
+        }
+
+        // Génération auto au chargement si des champs sont pré-remplis
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('r').value) {
+                genererPrompt();
+            }
+        });
+    </script>
+</body>
+</html>
